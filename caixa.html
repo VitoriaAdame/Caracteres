@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Caixa de texto</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/caixa.css"/>
+	<script type="text/javascript">
+		$(function(){
+				$("h1").on({
+					mouseenter: function(){	
+					$("#img").animate({top:'20px'}, 2500);
+					}
+				});
+				
+			function ocorrencia(palavra){
+				this.palavra = palavra;
+				this.numOcorrencia = 1;
+			}
+			$("#text").keyup(function(){
+				var palavra= $("#text").val(); 
+			$("#num").text(140-$(this).val().length)
+			var qtd= $("#text").val().length;
+			if(qtd==140){
+				alert("Quantidade máxima atingida!!!");
+				$("body").css("background-image", "url(https://media1.giphy.com/media/3o7TKDMPKsakcn9NU4/200.webp#24-grid1)");
+				$("body").css("background-size", "100%");
+			}
+			
+			var palavraArray= palavra.split(" ");
+			console.log(palavraArray);
+			
+			var ocorrencias=[];
+			var status;
+			$.each(palavraArray, function( ind, obj){
+			status=false;
+			
+				$.each(ocorrencias, function(i, objeto){
+					if(obj==objeto.palavra){
+					objeto.ocorrencia++;
+					status=true;
+					}	
+				})
+				
+				if (status==false){
+				ocorrencias.push({palavra:obj, ocorrencia:1});
+				}
+			
+			}); 
+			
+			var quantidade=0;
+			var palavraMaisOcorrencia=" ";
+				$.each(ocorrencias, function(i, obj){
+				 if(obj.ocorrencia>quantidade){
+					quantidade=obj.ocorrencia;
+					palavraMaisOcorrencia=obj.palavra;
+				 }
+				});
+					
+			
+			
+			$(".msg")
+				.text("Número de caracteres com espaço: "+qtd)
+			$(".palavras")	
+				.text("Número de palavras com espaço: " + (palavraArray.length))
+			$(".carcspace")
+				.text("Número de caracteres sem espaço: "+ (qtd - palavraArray.length + 1));
+			$(".palavras-comuns")
+				.text("Palavra mais comum:"+palavraMaisOcorrencia);
+				
+		});
+		});
+	</script>
+</head>
+<body>
+	<img src="./img/indio.png" id="img"/>
+	<div class="fix"></div>
+	<h1>Baú das Palavras</h1>
+<div class="texto">
+	<textarea maxlength="140" id="text" placeholder="Digite aqui e desvenda o mistério hahaha"></textarea><span id="num"></span>
+</div>
+<div class="msg"></div>
+<div class="carcspace"></div>
+<div class="palavras"></div>
+<div class="palavras-comuns"></div>
+
+</body>
+</html>
